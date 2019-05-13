@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 public class Game extends Canvas implements Runnable
 {
@@ -12,12 +13,17 @@ public class Game extends Canvas implements Runnable
 	public boolean isRunning = false;
 	private Thread thread;
 	private UpdateHandler handler;
+	
+	private BufferedImage level_background = null;
 
 	public Game()
 	{
 		new GameWindow(1000, 1000, "Top Down Shooter", this);
 		start();
 		handler = new UpdateHandler();
+		
+		ImageLoader loader = new ImageLoader();
+		level_background = loader.loadImage("/gameLevel.png");
 		
 		handler.addObject(new Box(100, 100, ID.Block));
 		handler.addObject(new ShooterMan(100, 100, ID.Player, handler));
