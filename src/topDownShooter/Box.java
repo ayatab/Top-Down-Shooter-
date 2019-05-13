@@ -28,7 +28,7 @@ public class Box extends GameObject{
 
 	public Rectangle getBounds() {
 
-		return null;
+		return new Rectangle(x, y, 50, 50);
 	}
 	
 }

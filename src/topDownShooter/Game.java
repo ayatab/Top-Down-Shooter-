@@ -19,7 +19,7 @@ public class Game extends Canvas implements Runnable
 		start();
 		handler = new UpdateHandler();
 		
-		//handler.addObject(new Box(100, 100, ID.Block));
+		handler.addObject(new Box(100, 100, ID.Block));
 		handler.addObject(new ShooterMan(100, 100, ID.Player, handler));
 		
 		this.addKeyListener(new KeyInput(handler));
