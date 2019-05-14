@@ -20,18 +20,23 @@ public class Game extends Canvas implements Runnable
 
 	public Game()
 	{
-		new GameWindow(1000, 563, "Top Down Shooter", this);
+		new GameWindow(1000, 1000, "Top Down Shooter", this);
 		start();
+		
 		handler = new UpdateHandler();
 		camera = new GameCamera(0, 0);
 		
+		this.addKeyListener(new KeyInput(handler));
+		this.addMouseListener(new MouseInput(handler, camera));
+
+		
 		ImageLoader loader = new ImageLoader();
-		level_background = loader.loadImage("/gameLevel.png");
+		level_background = loader.loadImage("/gameLevel2.png");
 		
 		//handler.addObject(new Box(100, 100, ID.Block));
 		//handler.addObject(new ShooterMan(100, 100, ID.Player, handler));
 		loadLevel(level_background);
-		this.addKeyListener(new KeyInput(handler));
+
 	}
 	//ask
 	public void start()
@@ -113,7 +118,7 @@ public class Game extends Canvas implements Runnable
 		/////////////////graphics for the game////////////////////
 
 		g.setColor(Color.gray);
-		g.fillRect(0, 0, 1000, 563);
+		g.fillRect(0, 0, 1000, 1000);
 		
 		g2d.translate(-camera.getX(), -camera.getY());
 		
@@ -142,10 +147,10 @@ public class Game extends Canvas implements Runnable
 				
 				if (red == 255)
 				{
-					handler.addObject(new Block(i*32, j*32, ID.Block));
+					handler.addObject(new Block(i*32, j*32, ID.Block, handler));
 				}
 				
-				if(green == 255)
+				if(blue == 255)
 				{
 					handler.addObject(new ShooterMan(i*32, j*32, ID.Player, handler));
 				}

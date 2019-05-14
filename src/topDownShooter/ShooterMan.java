@@ -9,7 +9,7 @@ public class ShooterMan extends GameObject{
 	UpdateHandler handler; 
 	
 	public ShooterMan(int x, int y, ID id, UpdateHandler handler) {
-		super(x, y, id);
+		super(x, y, id, handler);
 		this.handler = handler;
 
 	}
@@ -18,6 +18,8 @@ public class ShooterMan extends GameObject{
 	public void tick() {
 		x += velX;
 		y += velY;
+		
+		collision();
 		
 		//movement of character
 		if(handler.isUp()) velY = -5;
@@ -33,17 +35,32 @@ public class ShooterMan extends GameObject{
 		else if(!handler.isRight()) velX = 0;
 		
 	}
-
+	private void collision()
+	{
+		for(int i = 0; i < handler.object.size(); i++)
+		{
+			GameObject obj = handler.object.get(i);
+			
+			if(obj.getId() == ID.Block)
+			{
+				if(getBounds().intersects(obj.getBounds()))
+				{
+					x += velX * -1;
+					y += velY * -1;
+				}
+			}
+		}
+	}
 
 	public void render(Graphics g) {
 		g.setColor(Color.GREEN);
-		g.fillRect(x, y, 50, 100);
+		g.fillRect(x, y, 32, 64);
 		
 	}
 
 	public Rectangle getBounds() {
 
-		return new Rectangle(x, y, 50, 100);
+		return new Rectangle(x, y, 32, 64);
 	}
 
 }

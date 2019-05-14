@@ -6,8 +6,8 @@ import java.awt.Rectangle;
 
 public class Box extends GameObject{
 
-	public Box(int x, int y, ID id) {
-		super(x, y, id);
+	public Box(int x, int y, ID id, UpdateHandler handler) {
+		super(x, y, id, handler);
 
 	}
 

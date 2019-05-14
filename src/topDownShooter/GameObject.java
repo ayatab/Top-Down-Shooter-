@@ -10,12 +10,14 @@ public abstract class GameObject
 	//speed at which our object is going, positive is up or right
 	protected float velX = 0, velY = 0;
 	protected ID id;
+	private UpdateHandler handler;
 	
-	public GameObject(int x, int y, ID id)
+	public GameObject(int x, int y, ID id, UpdateHandler handler)
 	{
 		this.x = x;
 		this.y = y;
 		this.id = id;
+		this.handler = handler;
 		
 	}
 	
