@@ -3,6 +3,7 @@ package topDownShooter;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -108,12 +109,17 @@ public class Game extends Canvas implements Runnable
 		}
 
 		Graphics g = bs.getDrawGraphics();
+		Graphics2D g2d = (Graphics2D) g;
 		/////////////////graphics for the game////////////////////
 
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, 1000, 1000);
-
+		
+		g2d.translate(-camera.getX(), -camera.getY());
+		
 		handler.render(g);
+		
+		g2d.translate(camera.getX(), camera.getY());
 		//shows the objects above background because it renders after our background
 
 		/////////////////////////////////////
@@ -139,7 +145,7 @@ public class Game extends Canvas implements Runnable
 					handler.addObject(new Block(i*32, j*32, ID.Block));
 				}
 				
-				if(blue == 255)
+				if(green == 255)
 				{
 					handler.addObject(new ShooterMan(i*32, j*32, ID.Player, handler));
 				}
