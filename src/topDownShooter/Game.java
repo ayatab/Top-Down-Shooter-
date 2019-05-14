@@ -20,7 +20,7 @@ public class Game extends Canvas implements Runnable
 
 	public Game()
 	{
-		new GameWindow(1000, 1000, "Top Down Shooter", this);
+		new GameWindow(1000, 563, "Top Down Shooter", this);
 		start();
 		handler = new UpdateHandler();
 		camera = new GameCamera(0, 0);
@@ -113,7 +113,7 @@ public class Game extends Canvas implements Runnable
 		/////////////////graphics for the game////////////////////
 
 		g.setColor(Color.gray);
-		g.fillRect(0, 0, 1000, 1000);
+		g.fillRect(0, 0, 1000, 563);
 		
 		g2d.translate(-camera.getX(), -camera.getY());
 		
