@@ -13,6 +13,7 @@ public class Game extends Canvas implements Runnable
 	public boolean isRunning = false;
 	private Thread thread;
 	private UpdateHandler handler;
+	private GameCamera camera;
 	
 	private BufferedImage level_background = null;
 
@@ -21,13 +22,14 @@ public class Game extends Canvas implements Runnable
 		new GameWindow(1000, 1000, "Top Down Shooter", this);
 		start();
 		handler = new UpdateHandler();
+		camera = new GameCamera(0, 0);
 		
 		ImageLoader loader = new ImageLoader();
 		level_background = loader.loadImage("/gameLevel.png");
 		
-		handler.addObject(new Box(100, 100, ID.Block));
-		handler.addObject(new ShooterMan(100, 100, ID.Player, handler));
-		
+		//handler.addObject(new Box(100, 100, ID.Block));
+		//handler.addObject(new ShooterMan(100, 100, ID.Player, handler));
+		loadLevel(level_background);
 		this.addKeyListener(new KeyInput(handler));
 	}
 	//ask
@@ -85,6 +87,13 @@ public class Game extends Canvas implements Runnable
 	//updates everything in the game
 	public void tick()
 	{
+		for(int i = 0; i < handler.object.size(); i++)
+		{
+			if(handler.object.get(i).getId() == ID.Player)
+			{
+				camera.tick(handler.object.get(i));
+			}
+		}
 		handler.tick();
 	}
 
@@ -111,7 +120,32 @@ public class Game extends Canvas implements Runnable
 		g.dispose();
 		bs.show();
 	}
-
+	private void loadLevel(BufferedImage image)
+	{
+		int width = image.getWidth();
+		int height = image.getHeight();
+		
+		for(int i = 0; i < width; i++)
+		{
+			for(int j = 0; j < height; j++)
+			{
+				int pixel = image.getRGB(i, j);
+				int red = (pixel >> 16) & 0xff;
+				int green = (pixel >> 8) & 0xff;
+				int blue = (pixel) & 0xff;
+				
+				if (red == 255)
+				{
+					handler.addObject(new Block(i*32, j*32, ID.Block));
+				}
+				
+				if(blue == 255)
+				{
+					handler.addObject(new ShooterMan(i*32, j*32, ID.Player, handler));
+				}
+			}
+		}
+	}
 	public static void main(String args[])
 	{
 		new Game();
