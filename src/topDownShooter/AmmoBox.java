@@ -4,24 +4,23 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public class Box extends GameObject{
+public class AmmoBox extends GameObject{
 
-	public Box(int x, int y, ID id, UpdateHandler handler) {
+	public AmmoBox(int x, int y, ID id, UpdateHandler handler) {
 		super(x, y, id, handler);
 
 	}
 
 
 	public void tick() {
-		x += velX;
-		y += velY;
+		
 		
 	}
 
 
 	public void render(Graphics g) {
 
-		g.setColor(Color.black);
+		g.setColor(Color.ORANGE);
 		g.fillRect(x, y, 50, 50);
 	}
 

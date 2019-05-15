@@ -7,11 +7,16 @@ import java.awt.Rectangle;
 public class ShooterMan extends GameObject{
 
 	UpdateHandler handler; 
+	Game game;
+	private int hp = 100;
 	
-	public ShooterMan(int x, int y, ID id, UpdateHandler handler) {
+	public ShooterMan(int x, int y, ID id, UpdateHandler handler, Game game) {
 		super(x, y, id, handler);
 		this.handler = handler;
+		this.game = game;
 
+		
+		
 	}
 
 
@@ -49,6 +54,26 @@ public class ShooterMan extends GameObject{
 					y += velY * -1;
 				}
 			}
+			
+			if(obj.getId() == ID.Enemy)
+			{
+				if(getBounds().intersects(obj.getBounds()))
+				hp -= 5;
+			}
+			if(obj.getId() == ID.AmmoBox)
+			{
+				if(getBounds().intersects(obj.getBounds()))
+				{
+					game.ammo += 10;
+					handler.removeObject(obj);
+				}
+			}
+			
+			
+		}
+		if(hp <= 0)
+		{
+			
 		}
 	}
 

@@ -17,25 +17,33 @@ public class Game extends Canvas implements Runnable
 	private GameCamera camera;
 	
 	private BufferedImage level_background = null;
+	private BufferedImage floor_image = null;
+	
+	public int ammo = 100;
+	public int ShooterManHP = 100;
 
 	public Game()
 	{
-		new GameWindow(1000, 1000, "Top Down Shooter", this);
-		start();
+		
 		
 		handler = new UpdateHandler();
 		camera = new GameCamera(0, 0);
 		
 		this.addKeyListener(new KeyInput(handler));
-		this.addMouseListener(new MouseInput(handler, camera));
+		this.addMouseListener(new MouseInput(handler, camera, this));
 
 		
 		ImageLoader loader = new ImageLoader();
 		level_background = loader.loadImage("/gameLevel2.png");
+		floor_image = loader.loadImage("/brickfloor.jpg");
 		
 		//handler.addObject(new Box(100, 100, ID.Block));
 		//handler.addObject(new ShooterMan(100, 100, ID.Player, handler));
 		loadLevel(level_background);
+		
+		new GameWindow(1000, 1000, "Top Down Shooter", this);
+		start();
+		
 
 	}
 	//ask
@@ -117,10 +125,19 @@ public class Game extends Canvas implements Runnable
 		Graphics2D g2d = (Graphics2D) g;
 		/////////////////graphics for the game////////////////////
 
+		
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, 1000, 1000);
 		
 		g2d.translate(-camera.getX(), -camera.getY());
+		
+		for(int i = 0; i < 30*72; i +=32)
+		{
+			for(int j = 0; j < 30*72; j+= 32)
+			{
+				g.drawImage(floor_image, i, j, null);
+			}
+		}
 		
 		handler.render(g);
 		
@@ -150,10 +167,19 @@ public class Game extends Canvas implements Runnable
 					handler.addObject(new Block(i*32, j*32, ID.Block, handler));
 				}
 				
-				if(blue == 255)
+				if(blue == 255 && green == 0)
 				{
-					handler.addObject(new ShooterMan(i*32, j*32, ID.Player, handler));
+					handler.addObject(new ShooterMan(i*32, j*32, ID.Player, handler, this));
 				}
+				if (green == 255 && blue == 0)
+				{
+					handler.addObject(new Enemy(i*32, j*32, ID.Enemy, handler));
+				}
+				if (green == 255 && blue == 255)
+				{
+					handler.addObject(new AmmoBox(i*32, j*32, ID.AmmoBox, handler));
+				}
+				
 			}
 		}
 	}
