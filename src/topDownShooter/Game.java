@@ -14,7 +14,7 @@ public class Game extends Canvas implements Runnable
 	public boolean isRunning = false;
 	private Thread thread;
 	private UpdateHandler handler;
-	private GameCamera camera;
+	public GameCamera camera;
 
 	private BufferedImage level_background = null;
 	private BufferedImage floor_image = null;
