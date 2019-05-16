@@ -19,6 +19,8 @@ public class Game extends Canvas implements Runnable
 	private BufferedImage level_background = null;
 	private BufferedImage floor_image = null;
 	public BufferedImage wall_image1 = null;
+	public BufferedImage[] dittoAnim = new BufferedImage[4];
+	public BufferedImage[] blobAnim = new BufferedImage[4];
 
 	public int ammo = 100;
 	public int ShooterManHP = 100;
@@ -36,8 +38,21 @@ public class Game extends Canvas implements Runnable
 
 		ImageLoader loader = new ImageLoader();
 		level_background = loader.loadImage("/gameLevel2.png");
-		floor_image = loader.loadImage("/brickfloor.jpg");
+		floor_image = loader.loadImage("/floor2.jpg");
 		wall_image1 = loader.loadImage("/wall.jpg");
+		
+		//shooter ditto
+		
+		dittoAnim[0] = loader.loadImage("/ditto1.png");
+		dittoAnim[1] = loader.loadImage("/ditto2.png");
+		dittoAnim[2] = loader.loadImage("/ditto3.png");
+		dittoAnim[3] = loader.loadImage("/ditto4.png");
+		
+		blobAnim[0] = loader.loadImage("/blob1.png");
+		blobAnim[1] = loader.loadImage("/blob2.png");
+		blobAnim[2] = loader.loadImage("/blob3.png");
+		blobAnim[3] = loader.loadImage("/blob4.png");
+		
 		
 		
 
@@ -176,7 +191,7 @@ public class Game extends Canvas implements Runnable
 				}
 				if (green == 255 && blue == 0)
 				{
-					handler.addObject(new Enemy(i*32, j*32, ID.Enemy, handler));
+					handler.addObject(new Enemy(i*32, j*32, ID.Enemy, handler, this));
 				}
 				if (green == 255 && blue == 255)
 				{

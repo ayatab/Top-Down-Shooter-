@@ -3,26 +3,36 @@ package topDownShooter;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Enemy extends GameObject
 {
 	private UpdateHandler handler;
+	
+	private BufferedImage[] blob;
+	private Animation animation;
 
 	Random r = new Random();
 	int chooseNum = 0;
 	int hp = 100;
 
 
-	public Enemy(int x, int y, ID id, UpdateHandler handler) {
+	public Enemy(int x, int y, ID id, UpdateHandler handler, Game game) {
 		super(x, y, id, handler);
 		this.handler = handler;
+
+		blob = game.blobAnim;
+		animation = new Animation(blob, 100);
 	}
 
 
 	public void tick() {
+		
 		x += velX;
 		x += velY;
+		
+		animation.tick();
 
 		chooseNum = r.nextInt(10);
 
@@ -66,13 +76,15 @@ public class Enemy extends GameObject
 			handler.removeObject(this);
 		}
 
+		
 
 	}
 
 
 	public void render(Graphics g) {
-		g.setColor(Color.blue);
-		g.fillRect(x, y, 50, 50);
+//		g.setColor(Color.blue);
+//		g.fillRect(x, y, 50, 50);
+		animation.render(g, x, y, 50, 50);
 		
 
 	}

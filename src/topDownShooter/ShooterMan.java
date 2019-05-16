@@ -3,11 +3,16 @@ package topDownShooter;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 public class ShooterMan extends GameObject{
 
 	UpdateHandler handler; 
 	Game game;
+	
+	private BufferedImage[] dittoGuy;
+	private Animation animation;
+	
 	private int hp = 100;
 	
 	public ShooterMan(int x, int y, ID id, UpdateHandler handler, Game game) {
@@ -15,7 +20,8 @@ public class ShooterMan extends GameObject{
 		this.handler = handler;
 		this.game = game;
 
-		
+		dittoGuy = game.dittoAnim;
+		animation = new Animation(dittoGuy, 100);
 		
 	}
 
@@ -23,6 +29,8 @@ public class ShooterMan extends GameObject{
 	public void tick() {
 		x += velX;
 		y += velY;
+		
+		animation.tick();
 		
 		collision();
 		
@@ -38,6 +46,8 @@ public class ShooterMan extends GameObject{
 		
 		if(handler.isLeft()) velX = -5;
 		else if(!handler.isRight()) velX = 0;
+		
+		
 		
 	}
 	private void collision()
@@ -78,8 +88,10 @@ public class ShooterMan extends GameObject{
 	}
 
 	public void render(Graphics g) {
-		g.setColor(Color.GREEN);
-		g.fillRect(x, y, 32, 64);
+//		g.setColor(Color.GREEN);
+//		g.fillRect(x, y, 32, 64);
+		
+		animation.render(g, x, y, 100, 100);
 		
 	}
 
