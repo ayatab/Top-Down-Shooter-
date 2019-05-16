@@ -23,8 +23,7 @@ public class Enemy extends GameObject
 		super(x, y, id, handler);
 		this.handler = handler;
 		this.game = game;
-		
-		
+
 
 		blob = game.blobAnim;
 		animation = new Animation(blob, 100);
@@ -44,21 +43,7 @@ public class Enemy extends GameObject
 		{
 			GameObject obj = handler.object.get(i);
 
-			if(obj.getId() == ID.Block)
-			{
-				if(getWallBounds().intersects(obj.getBounds()))
-				{
-					x += (velX * 5) * -1;
-					y += (velY *5) * -1;
-					
-				}
-				//				else if(chooseNum == 0)
-				//				{
-				//					velX = (r.nextInt(4 - - 4) + -4);
-				//					velX = (r.nextInt(4 - - 4) + -4);
-				//
-				//				}
-			}
+
 
 			if(obj.getId() == ID.Bullet)
 			{
@@ -71,24 +56,47 @@ public class Enemy extends GameObject
 
 				}
 			}
+
+			if(obj.getId() == ID.Player)
 			{
-				if(obj.getId() == ID.Player)
+				if((Math.abs(obj.getX()-x) <= 500) || (Math.abs(obj.getY()-y) <= 500))
 				{
-					if((Math.abs(obj.getX()-x) <= 500) || (Math.abs(obj.getY()-y) <= 500))
-					{
-						int xAngle = obj.getX() - x;
-						int yAngle = obj.getY() - y;
+					int xAngle = (int) ((obj.getX() - x) / ((Math.abs(obj.getX() - x) + 1) * .5));
+					int yAngle = (int) ((obj.getY() - y) / ((Math.abs(obj.getY() - y) + 1) * .5));
 
-						double angle = Math.atan2(yAngle, xAngle);
+					//double angle = Math.atan2(yAngle, xAngle);
 
-						x += (1 * Math.cos(angle));
-						y += (1 * Math.sin(angle));
-					}	
-				}
+					x += xAngle;
+					//(1 * Math.cos(angle));
+					y += yAngle;
+					//(1 * Math.sin(angle));
+
+				}	
 			}
+			if(obj.getId() == ID.Block)
+			{
+				if(getWallBounds().intersects(obj.getBounds()))
+				{
+					x += (obj.getX() - x) * -.1;
+					y += (obj.getY() - y) * -.1;
 
+				}
+				
+			}
+			if(obj.getId() == ID.Enemy)
+			{
+				if(getWallBounds().intersects(obj.getBounds()))
+				{
+					x += (obj.getX() - x) * -.1;
+					y += (obj.getY() - y) * -.1;
 
+				}
+				
+			}
 		}
+
+
+
 		if(hp <= 0)
 		{
 			handler.removeObject(this);
