@@ -15,35 +15,39 @@ public class Game extends Canvas implements Runnable
 	private Thread thread;
 	private UpdateHandler handler;
 	private GameCamera camera;
-	
+
 	private BufferedImage level_background = null;
 	private BufferedImage floor_image = null;
-	
+	public BufferedImage wall_image1 = null;
+
 	public int ammo = 100;
 	public int ShooterManHP = 100;
 
 	public Game()
 	{
-		
-		
+
+
 		handler = new UpdateHandler();
 		camera = new GameCamera(0, 0);
-		
+
 		this.addKeyListener(new KeyInput(handler));
 		this.addMouseListener(new MouseInput(handler, camera, this));
 
-		
+
 		ImageLoader loader = new ImageLoader();
 		level_background = loader.loadImage("/gameLevel2.png");
 		floor_image = loader.loadImage("/brickfloor.jpg");
+		wall_image1 = loader.loadImage("/wall.jpg");
 		
+		
+
 		//handler.addObject(new Box(100, 100, ID.Block));
 		//handler.addObject(new ShooterMan(100, 100, ID.Player, handler));
 		loadLevel(level_background);
-		
+
 		new GameWindow(1000, 1000, "Top Down Shooter", this);
 		start();
-		
+
 
 	}
 	//ask
@@ -125,12 +129,12 @@ public class Game extends Canvas implements Runnable
 		Graphics2D g2d = (Graphics2D) g;
 		/////////////////graphics for the game////////////////////
 
-		
+
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, 1000, 1000);
-		
+
 		g2d.translate(-camera.getX(), -camera.getY());
-		
+
 		for(int i = 0; i < 30*72; i +=32)
 		{
 			for(int j = 0; j < 30*72; j+= 32)
@@ -138,9 +142,9 @@ public class Game extends Canvas implements Runnable
 				g.drawImage(floor_image, i, j, null);
 			}
 		}
-		
+
 		handler.render(g);
-		
+
 		g2d.translate(camera.getX(), camera.getY());
 		//shows the objects above background because it renders after our background
 
@@ -152,7 +156,7 @@ public class Game extends Canvas implements Runnable
 	{
 		int width = image.getWidth();
 		int height = image.getHeight();
-		
+
 		for(int i = 0; i < width; i++)
 		{
 			for(int j = 0; j < height; j++)
@@ -161,12 +165,11 @@ public class Game extends Canvas implements Runnable
 				int red = (pixel >> 16) & 0xff;
 				int green = (pixel >> 8) & 0xff;
 				int blue = (pixel) & 0xff;
-				
+
 				if (red == 255)
 				{
-					handler.addObject(new Block(i*32, j*32, ID.Block, handler));
+					handler.addObject(new Block(i*32, j*32, ID.Block, handler, this));
 				}
-				
 				if(blue == 255 && green == 0)
 				{
 					handler.addObject(new ShooterMan(i*32, j*32, ID.Player, handler, this));
@@ -179,7 +182,7 @@ public class Game extends Canvas implements Runnable
 				{
 					handler.addObject(new AmmoBox(i*32, j*32, ID.AmmoBox, handler));
 				}
-				
+
 			}
 		}
 	}
