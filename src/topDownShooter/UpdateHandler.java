@@ -44,6 +44,7 @@ public class UpdateHandler {
 		{
 			object.remove(tempObject);
 		}
+
 		
 		public boolean isUp() {
 			return up;

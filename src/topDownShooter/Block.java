@@ -8,11 +8,14 @@ import java.awt.image.BufferedImage;
 public class Block extends GameObject 
 {
 	private BufferedImage wall_image;
-	public Block(int x, int y, ID id, UpdateHandler handler) {
+	private Game game;
+	public Block(int x, int y, ID id, UpdateHandler handler, Game game) {
 		super(x, y, id, handler);
-		ImageLoader loader = new ImageLoader();
+		this.game = game;
+		//ImageLoader loader = new ImageLoader();
 		
-		wall_image = loader.loadImage("/wall2.png");
+		wall_image = game.wall_image1;
+				//loader.loadImage("/wall2.png");
 
 	}
 

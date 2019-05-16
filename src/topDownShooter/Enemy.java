@@ -13,6 +13,7 @@ public class Enemy extends GameObject
 	int chooseNum = 0;
 	int hp = 100;
 
+
 	public Enemy(int x, int y, ID id, UpdateHandler handler) {
 		super(x, y, id, handler);
 		this.handler = handler;
@@ -50,7 +51,10 @@ public class Enemy extends GameObject
 			{
 				if(getBounds().intersects(obj.getBounds()))
 				{
+					
 					hp -= 20;
+					handler.removeObject(obj);
+//					System.out.println("hp is at " + hp);
 					
 				}
 			}
@@ -68,10 +72,18 @@ public class Enemy extends GameObject
 
 	public void render(Graphics g) {
 		g.setColor(Color.blue);
-		g.fillOval(x, y, 50, 50);
+		g.fillRect(x, y, 50, 50);
+		
 
 	}
+	public int getHp() {
+		return hp;
+	}
 
+
+	public void setHp(int enemy_hp) {
+		hp = enemy_hp;
+	}
 
 	public Rectangle getBounds() {
 		// TODO Auto-generated method stub
@@ -82,5 +94,6 @@ public class Enemy extends GameObject
 	{
 		return new Rectangle(x, y, 60, 60);
 	}
+	
 
 }
