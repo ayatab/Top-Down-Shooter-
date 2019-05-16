@@ -91,13 +91,13 @@ public class ShooterMan extends GameObject{
 //		g.setColor(Color.GREEN);
 //		g.fillRect(x, y, 32, 64);
 		
-		animation.render(g, x, y, 100, 100);
+		animation.render(g, x, y, 55, 55);
 		
 	}
 
 	public Rectangle getBounds() {
 
-		return new Rectangle(x, y, 32, 64);
+		return new Rectangle(x, y, 55, 55);
 	}
 
 }
