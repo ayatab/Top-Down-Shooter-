@@ -9,53 +9,56 @@ public class ShooterMan extends GameObject{
 
 	UpdateHandler handler; 
 	Game game;
-	
+
 	private BufferedImage[] dittoGuy;
 	private Animation animation;
-	
-	private int hp = 100;
-	
+
+	private int hp;
+
 	public ShooterMan(int x, int y, ID id, UpdateHandler handler, Game game) {
 		super(x, y, id, handler);
 		this.handler = handler;
 		this.game = game;
 
+
+
 		dittoGuy = game.dittoAnim;
 		animation = new Animation(dittoGuy, 100);
-		
+
 	}
 
 
 	public void tick() {
 		x += velX;
 		y += velY;
-		
+
 		animation.tick();
-		
+
 		collision();
-		
+
 		//movement of character
 		if(handler.isUp()) velY = -5;
 		else if(!handler.isDown()) velY = 0;
-		
+
 		if(handler.isDown()) velY = 5;
 		else if(!handler.isUp()) velY = 0;
 
 		if(handler.isRight()) velX = 5;
 		else if(!handler.isLeft()) velX = 0;
-		
+
 		if(handler.isLeft()) velX = -5;
 		else if(!handler.isRight()) velX = 0;
-		
-		
-		
+
+
+
 	}
 	private void collision()
 	{
+		hp = game.getShooterManHP();
 		for(int i = 0; i < handler.object.size(); i++)
 		{
 			GameObject obj = handler.object.get(i);
-			
+
 			if(obj.getId() == ID.Block)
 			{
 				if(getBounds().intersects(obj.getBounds()))
@@ -64,35 +67,38 @@ public class ShooterMan extends GameObject{
 					y += velY * -1;
 				}
 			}
-			
+
 			if(obj.getId() == ID.Enemy)
 			{
 				if(getBounds().intersects(obj.getBounds()))
-				hp -= 5;
+				{
+					game.setShooterManHP(game.getShooterManHP() - 5);
+					handler.removeObject(obj);
+				}
 			}
 			if(obj.getId() == ID.AmmoBox)
 			{
 				if(getBounds().intersects(obj.getBounds()))
 				{
-					game.ammo += 10;
+					game.setAmmo(game.getAmmo() + 30);
 					handler.removeObject(obj);
 				}
 			}
-			
-			
+
+
 		}
-		if(hp <= 0)
-		{
-			
-		}
+//		if(hp <= 0)
+//		{
+//			game.stop();
+//		}
 	}
 
 	public void render(Graphics g) {
-//		g.setColor(Color.GREEN);
-//		g.fillRect(x, y, 32, 64);
-		
+		//		g.setColor(Color.GREEN);
+		//		g.fillRect(x, y, 32, 64);
+
 		animation.render(g, x, y, 55, 55);
-		
+
 	}
 
 	public Rectangle getBounds() {

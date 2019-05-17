@@ -32,8 +32,8 @@ public class Enemy extends GameObject
 
 	public void tick() {
 
-		x += velX;
-		x += velY;
+		//x += velX;
+		//x += velY;
 
 		animation.tick();
 
@@ -59,7 +59,7 @@ public class Enemy extends GameObject
 
 			if(obj.getId() == ID.Player)
 			{
-				if((Math.abs(obj.getX()-x) <= 500) || (Math.abs(obj.getY()-y) <= 500))
+				if((Math.abs(obj.getX()-x) <= 700) && (Math.abs(obj.getY()-y) <= 700))
 				{
 					int xAngle = (int) ((obj.getX() - x) / ((Math.abs(obj.getX() - x) + 1) * .5));
 					int yAngle = (int) ((obj.getY() - y) / ((Math.abs(obj.getY() - y) + 1) * .5));
