@@ -28,6 +28,7 @@ public class Game extends Canvas implements Runnable
 
 	private int ammo = 100;
 	private int ShooterManHP = 100;
+	private int EnemiesKilled;
 	private static boolean removeBox; 
 
 	public Game()
@@ -161,12 +162,13 @@ public class Game extends Canvas implements Runnable
 
 					if (green == 255 && blue == 0)
 					{
-						handler.addObject(new Enemy(i*32, j*32, ID.Enemy, handler, this));
+						if(EnemiesKilled <= 50)
+							handler.addObject(new Enemy(i*32, j*32, ID.Enemy, handler, this));
 					}
 					if (green == 255 && blue == 255)
 					{
-						
-						
+
+
 						handler.addObject(new AmmoBox(i*32, j*32, ID.AmmoBox, handler, this));
 					}
 
@@ -175,7 +177,7 @@ public class Game extends Canvas implements Runnable
 			}
 		}
 		//handler.tick();
-		
+
 	}
 
 	//renders everything in the game, around 2000 times a second
@@ -221,6 +223,9 @@ public class Game extends Canvas implements Runnable
 		g.setFont(font);
 		g.setColor(Color.green);
 		g.drawString("Ammo: " + ammo, 5, 55);
+		g.setFont(font);
+		g.setColor(Color.black);
+		g.drawString("Enemies killed: " + EnemiesKilled, 5, 80);
 		if(ShooterManHP <= 0)
 		{
 
@@ -291,6 +296,12 @@ public class Game extends Canvas implements Runnable
 	}
 	public BufferedImage getAmmoCrateImage() {
 		return AmmoCrateImage;
+	}
+	public int getEnemiesKilled() {
+		return EnemiesKilled;
+	}
+	public void setEnemiesKilled(int enemiesKilled) {
+		EnemiesKilled = enemiesKilled;
 	}
 	
 

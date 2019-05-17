@@ -99,6 +99,7 @@ public class Enemy extends GameObject
 
 		if(hp <= 0)
 		{
+			game.setEnemiesKilled(game.getEnemiesKilled() + 1);
 			handler.removeObject(this);
 		}
 
