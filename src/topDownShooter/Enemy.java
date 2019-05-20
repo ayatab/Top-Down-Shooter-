@@ -101,6 +101,7 @@ public class Enemy extends GameObject
 		{
 			game.setEnemiesKilled(game.getEnemiesKilled() + 1);
 			handler.removeObject(this);
+			game.setEnemyNum(game.getEnemyNum() - 1);
 		}
 
 

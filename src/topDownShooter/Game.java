@@ -30,6 +30,7 @@ public class Game extends Canvas implements Runnable
 	private int ShooterManHP = 100;
 	private int EnemiesKilled;
 	private static boolean removeBox; 
+	private int EnemyNum;
 
 	public Game()
 	{
@@ -162,8 +163,12 @@ public class Game extends Canvas implements Runnable
 
 					if (green == 255 && blue == 0)
 					{
-						if(EnemiesKilled <= 50)
+						if(EnemiesKilled <= 50 && EnemyNum < 15)
+						{
 							handler.addObject(new Enemy(i*32, j*32, ID.Enemy, handler, this));
+							EnemyNum++;
+						}
+						
 					}
 					if (green == 255 && blue == 255)
 					{
@@ -303,6 +308,13 @@ public class Game extends Canvas implements Runnable
 	public void setEnemiesKilled(int enemiesKilled) {
 		EnemiesKilled = enemiesKilled;
 	}
+	public int getEnemyNum() {
+		return EnemyNum;
+	}
+	public void setEnemyNum(int enemyNum) {
+		EnemyNum = enemyNum;
+	}
+	
 	
 
 
